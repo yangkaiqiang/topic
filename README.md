@@ -1,18 +1,29 @@
-# Vue 3 + TypeScript + Vite
+# 测试项目
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 项目介绍
+1. 项目包含新闻列表页-新闻详情页-登录页面三部分
+2. 项目中用到的数据都是模拟数据
 
-## Recommended IDE Setup
+## 测试地址
+1. [新闻列表传送门](https://tmp.hz12.cn)
+2. [登录传送门](https://tmp.hz12.cn/login)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support For `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## 目录结构
+   ```
+   src
+   |__assets 静态资源
+   |__components 公共组件
+   |         |__CookieTip cookie提示
+   |         |__Icon icon图标，方便控制
+   |         |__Modal 弹窗
+   |         |__NavBar 导航
+   |         |__AudioPlayer.vue 音频
+   |         |__AutoComplete.vue 自动标签组件
+   |         |__BackTop.vue 返回顶部
+   |         |__ImageLazyLoad.vue 图片懒加载
+   |__pages 页面
+   |     |__Login 登录
+   |     |__News 新闻
+   |__router 路由
+   |__types 类型声明
+   ```
