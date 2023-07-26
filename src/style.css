@@ -1,0 +1,19 @@
+@import './assets/fonts/fontawesome.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-size: 14px;
+  font-family: Noto Sans JP, Hiragino Kaku Gothic ProN, Arial, ãƒ¡ã‚¤ãƒªã‚ª, Meiryo, sans-serif;
+  line-height: 1.5;
+  color: #493b33;
+  background: #e8e2db
+}
+
+#app {
+  min-height: 100vh;
+  background-color: aliceblue;
+}
+
