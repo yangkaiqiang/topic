@@ -6,7 +6,7 @@
             設定の手続の詳細については、当社の「<a href="javascript:viod(0)" target="_blank">Cookie
                 ポリシー</a>」をご覧ください。個人情報の取扱いについては、「<a href="javascript:viod(0)" target="_blank">PRIVACY
                 POLICY</a>」をご覧ください。</div>
-        <div class="btn-accept" @click="handleClose">OK</div>
+        <div class="btn-accept" @click="handleOk">OK</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -16,11 +16,11 @@ defineProps({
         default: false
     },
 })
-const emit = defineEmits(['close'])
+const emit = defineEmits(['ok'])
 
 
-const handleClose = () => {
-    emit('close', false)
+const handleOk = () => {
+    emit('ok', false)
 }
 </script>
 <style scoped>

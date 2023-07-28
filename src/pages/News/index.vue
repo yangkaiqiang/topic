@@ -1,7 +1,7 @@
 <template>
-  <div class="page-wrap">
+  <div class="page-wrap pb-6">
     <div class="search-wrap">
-      <AutoComplete @search="handleSearch" />
+      <AutoComplete :defaultValue="(route.query.search as string)" @search="handleSearch" />
     </div>
     <div class="news-list">
       <div class="news-item-wrap" v-for="newsItem in paginatedNews" :key="newsItem.id">
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div v-if="searchedNews.length > pageSize" class="pagination">
+    <div v-if="newsData.list.length > pageSize" class="pagination">
       <button class="prev-page" :class="{ 'disabled-btn': currentPage === 1 }" @click="prevPage"
         :disabled="currentPage === 1">上一页</button>
       <button class="next-page" :class="{ 'disabled-btn': currentPage === totalPages }" @click="nextPage"
@@ -28,42 +28,69 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import AutoComplete from '../../components/AutoComplete.vue';
 import ImageLazyLoad from '../../components/ImageLazyLoad.vue';
-import { INewsItem } from '../../types'
+import { INewsList, INewsItem } from '../../types'
 
-// 新闻数据集，包含100~1000个条目的新闻 -- 模拟数据代替api接口数据
-const newsData:INewsItem[] = [];
-for (let i = 1; i <= 1000; i++) {
-  newsData.push({
-    id: `${i}`,
-    title: `新闻标题 ${i} -- ${i % 2 ? '音乐' : '视频'}`,
-    content: `这是新闻内容 ${i} 哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~`,
-    imageUrl: `https://s9.rr.itc.cn/r/wapChange/20176_21_8/a7t2t65624640852619.jpg`,
-  });
-}
 
+const route = useRoute();
 const router = useRouter();
-const searchedNews = ref<INewsItem[]>(newsData);
+const newsData = ref<INewsList>({
+  list: [],
+  count: 0
+});
 const currentPage = ref(1);
-const pageSize = 8;
+const pageSize = 18;
 
 
-const totalPages = computed(() => Math.ceil(searchedNews.value.length / pageSize));
+const totalPages = computed(() => Math.ceil(newsData.value.count / pageSize));
 
 const paginatedNews = computed(() => {
   const startIndex = (currentPage.value - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  return searchedNews.value.slice(startIndex, endIndex);
+  return newsData.value.list.slice(startIndex, endIndex);
 });
 
-const handleSearch = (keyword: string) => {
-  searchedNews.value = newsData.filter((news) =>
-    news.title.toLowerCase().includes(keyword.toLowerCase())
+watch(router.currentRoute, () => {
+  fetchNewsData()
+});
+
+onMounted(() => {
+  fetchNewsData();
+});
+
+const fetchNewsData = () => {
+  // 新闻数据集，包含100~1000个条目的新闻 -- 模拟数据代替api接口数据
+  const data:INewsItem[] = [];
+  const count:number = 1000;
+  for (let i = 1; i <= count; i++) {
+    data.push({
+      id: `${i}`,
+      title: `新闻标题 ${i} -- ${i % 2 ? '音乐' : '视频'}`,
+      content: `这是新闻内容 ${i} 哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~哒哒哒~~`,
+      imageUrl: `https://s9.rr.itc.cn/r/wapChange/20176_21_8/a7t2t65624640852619.jpg`,
+    });
+  }
+  newsData.value = {list: data, count};
+
+  newsDatafilter();
+}
+
+const newsDatafilter = () => {
+  const search = route.query.search as string || '';
+  const list = newsData.value.list.filter((news) =>
+    news.title.toLowerCase().includes(search.toLowerCase())
   );
+  const count = newsData.value.list.length;
+  newsData.value = {list, count};
+  
   currentPage.value = 1;
+}
+
+const handleSearch = (keyword: string) => {
+  router.replace(keyword ? `/?search=${keyword}` : '/');
 }
 
 const prevPage = () => {
@@ -85,7 +112,7 @@ const goToNewsDetail = (newsItem:INewsItem) => {
 }
 
 .news-list {
-  @apply flex p-4 flex-wrap max-sm:pt-14;
+  @apply flex p-4 flex-wrap max-sm:pt-20;
 }
 
 .news-item-wrap {

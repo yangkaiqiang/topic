@@ -20,18 +20,25 @@
 </template>
   
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect, onMounted } from 'vue';
 import IconsSearch from './Icon/Search.vue';
 import IconClose from './Icon/Close.vue';
 import Dialog from './Modal'
+
+interface AutoCompleteProps {
+  defaultValue: string;
+}
+
+const props = defineProps<AutoCompleteProps>();
+
 
 //此处使用模拟数据 代替服务器中的数据
 const fakeData: string[] = [];
 for (let i = 1; i <= 1000; i++) {
   fakeData.push(`新闻标题 ${i} -- ${i % 2 ? '音乐' : '视频'}`);
 }
-
-const inputValue = ref<string>('');
+console.log(props.defaultValue)
+const inputValue = ref<string>(props.defaultValue);
 const suggestions = ref<string[]>([]);
 const showTip = ref<boolean>(false);
 const emit = defineEmits(["search"]);
@@ -46,11 +53,15 @@ function loadDataFromServer() {
   }
 }
 
+onMounted(() => {console.log(props.defaultValue)
+  showTip.value = false;
+});
+
 watchEffect(() => {
   if (!inputValue.value) {
     suggestions.value = [];
     return;
-  }
+  }console.log(props.defaultValue)
   loadDataFromServer();
 });
 

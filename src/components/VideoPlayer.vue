@@ -4,7 +4,7 @@
   </div>
 </template>
   
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue';
 import { videoPlay } from "vue3-video-play";
 import "vue3-video-play/dist/style.css";

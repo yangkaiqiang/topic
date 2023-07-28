@@ -7,22 +7,24 @@ interface CookieTipOptions {
 }
 
 const createModal = (options: CookieTipOptions): void => {
+  if(localStorage.getItem('isAgreeCookie')) return;
   const mountNode = document.createElement('div');
   const Instance = createApp(
       defineComponent({
           setup() {
               const show = ref(options?.show || true);
-              const close = () => {
+              const ok = () => {
+                  localStorage.setItem('isAgreeCookie', 'true')
                   show.value = false;
                   unmountModal();
               };
-              return { show, close };
+              return { show, ok };
           },
           render() {
               return h(CookieTip, {
                   ...options,
                   show: this.show,
-                  onClose: this.close,
+                  onOk: this.ok,
               });
           },
       })

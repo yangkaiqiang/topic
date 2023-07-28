@@ -2,13 +2,16 @@
   <div class="lazy-image" ref="lazyImageContainer">
     <div class="image-content">
       <img v-if="isVisible" :src="src" :alt="alt" @load="onImageLoad" @error="onImageError" />
-      <div v-else class="placeholder"></div>
+      <div v-else class="placeholder">
+        <RectFrame />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
+import RectFrame from './Frame/Rect.vue';
 
 interface ImageLazyLoadProps {
   src: string;
@@ -49,14 +52,17 @@ onUnmounted(() => {
 });
 
 const onIntersection = (entries: IntersectionObserverEntry[]) =>{
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      isVisible.value = true;
-    }
-  });
+  setTimeout(()=> {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        isVisible.value = true;
+      }
+    });
+  }, 300)
 }
 
 const onImageLoad = () => {
+  
   isVisible.value = true;
 }
 
@@ -68,6 +74,7 @@ const onImageError = () => {
 <style>
 .lazy-image {
   overflow: hidden;
+  height: 100%;
 }
 
 .image-content {
@@ -82,6 +89,7 @@ const onImageError = () => {
 }
 
 .placeholder {
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
+  height: 100%;
 }
 </style>

@@ -7,6 +7,12 @@ export interface INewsItem {
     imageUrl: string;
 }
 
+// 新闻数据列表
+export interface INewsList {
+    list: INewsItem[];
+    count: number;
+}
+
 // 新闻详情
 export interface INewsDetail {
     id: string;

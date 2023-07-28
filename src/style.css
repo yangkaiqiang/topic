@@ -6,14 +6,30 @@
 
 body {
   font-size: 14px;
-  font-family: Noto Sans JP, Hiragino Kaku Gothic ProN, Arial, ãƒ¡ã‚¤ãƒªã‚ª, Meiryo, sans-serif;
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", Arial, メイリオ, Meiryo, sans-serif;
   line-height: 1.5;
-  color: #493b33;
-  background: #e8e2db
+  color: #493b32;
+  background: #e8e2db;
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  -webkit-user-select: none;
 }
 
 #app {
   min-height: 100vh;
   background-color: aliceblue;
+}
+
+
+.form-label {
+  @apply block mt-1.5 mb-[3px] font-bold;
+}
+
+.form-control {
+  @apply w-full max-w-[540px] py-2.5 px-2 border border-solid border-[#d0d0d5] leading-none text-base rounded bg-white appearance-none outline-0 placeholder:text-[#ccc] focus:border-[#16bfb7] ;
+}
+
+.form-btn {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+  @apply inline-block relative h-[36.4px] px-7 border rounded-2xl text-white/[.9] text-sm bg-[#16bfb7] cursor-pointer active:top-px active:bg-light-green-gradient;
 }
 
